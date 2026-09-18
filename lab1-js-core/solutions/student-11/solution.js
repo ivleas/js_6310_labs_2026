@@ -23,7 +23,10 @@ function getReviewerNumber(number, lab) {
 }
 
 function getVariant(number, variants) {
-    return ((number - 1) % variants) + 1;
+    if (number % variants === 0) {
+        return 1;
+    }
+    return number % variants;
     // 2.2 Функция определяющая номер варианта, исходя из количества вариантов
 }
 
@@ -101,14 +104,12 @@ const student = {
             sum += gradesArray[i];
         }
         return sum / gradesArray.length;
-        // Ваш код здесь
     },
 
     // Метод для добавления новой оценки
     addGrade(subject, grade) {
         this.grades[subject] = grade;
         return `оценка ${grade} по предмету ${subject} успешно добавлена!`;
-        // Ваш код здесь
     }
 };
 
@@ -127,7 +128,9 @@ function processArrays() {
     // 1. Используйте forEach для вывода всех чисел больше 50
     console.log("Числа больше 50:");
     numbers.forEach(num => {
-        if (num > 50) console.log(num);
+        if (num > 50) {
+            console.log(num);
+        }
     });
 
     // 2. Используйте map для создания массива квадратов чисел
@@ -139,14 +142,10 @@ function processArrays() {
     // 4. Используйте find для поиска пользователя с именем "Виктория"
     const victoria = users.find(user => user.name === "Виктория");
 
-    // 5. Используйте reduce для подсчета суммы всех чисел
-    const sum = numbers.reduce((acc, num) => acc + num, 0);
-
-    // 6. Используйте sort для сортировки пользователей по возрасту (по убыванию)
-    const sortedByAge = [...users].sort((a, b) => b.age - a.age);
+с
 
     // 7. Используйте метод для проверки, все ли пользователи старше 18 лет
-    const allAdults = users.every(user => user.age > 18);
+    const allAdults = users.every(user => user.age >= 18);
 
     // 8. Создайте цепочку методов:
     //    - отфильтровать активных пользователей
@@ -442,8 +441,6 @@ function runTests() {
     
     // формат: +7(999)123-45-67 (смешанный, без пробелов)
     console.assert(validatePhone("+7(999)123-45-67") === true, "ошибка: смешанный формат без пробелов");
-
-    // --- НЕГАТИВНЫЕ ТЕСТЫ (должны вернуть false) ---
     
     // отсутствует код страны
     console.assert(validatePhone("9991234567") === false, "ошибка: пропущен код страны (+7 или 8)");
