@@ -24,7 +24,7 @@ function getReviewerNumber(number, lab) {
 
 function getVariant(number, variants) {
     if (number % variants === 0) {
-        return 1;
+        return number;
     }
     return number % variants;
     // 2.2 Функция определяющая номер варианта, исходя из количества вариантов
@@ -142,7 +142,7 @@ function processArrays() {
     // 4. Используйте find для поиска пользователя с именем "Виктория"
     const victoria = users.find(user => user.name === "Виктория");
 
-с
+
 
     // 7. Используйте метод для проверки, все ли пользователи старше 18 лет
     const allAdults = users.every(user => user.age >= 18);
