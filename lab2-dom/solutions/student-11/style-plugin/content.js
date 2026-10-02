@@ -6,11 +6,6 @@ function addVaporwaveMode() {
         const body = document.body;
         const button = document.getElementById('vaporwave-toggle-btn');
         
-        // очищаем встроенные стили, чтобы они не мешали CSS
-        body.style.background = ''; 
-        const wrapper = document.getElementById('page_wrapper');
-        if (wrapper) wrapper.style.background = '';
-        
         // проверяем активен ли класс
         const isActive = body.classList.contains('vaporwave-active');
 
@@ -55,11 +50,14 @@ function addVaporwaveMode() {
         buttonContainer.appendChild(button);
     }
 
-    // Вспомогательная функция создания элемента кнопки
+    // вспомогательная функция создания элемента кнопки
     function createButtonElement() {
         const button = document.createElement('div');
         button.id = 'vaporwave-toggle-btn';
         button.title = 'Переключить стиль Vaporwave';
+        
+        // задаем текст сразу при создании, чтобы кнопка не была пустой
+        button.textContent = '🌴 VAPORWAVE: ВЫКЛ';
         
         Object.assign(button.style, {
             minWidth: '160px',  
@@ -80,7 +78,8 @@ function addVaporwaveMode() {
             right: '10px',
             zIndex: '99999',
             whiteSpace: 'nowrap',
-            padding: '0 15px'
+            padding: '0 15px',
+            background: '#4285f4' // базовый цвет кнопки по умолчанию
         });
         
         button.addEventListener('mouseenter', () => { button.style.transform = 'scale(1.05)'; });
@@ -93,11 +92,18 @@ function addVaporwaveMode() {
     // проверка сохраненного состояния при загрузке
     function checkSavedState() {
         const savedMode = localStorage.getItem('vaporwaveMode');
+        const button = document.getElementById('vaporwave-toggle-btn');
+        if (!button) return;
+
+        // применяем состояние напрямую без задержки и имитации клика
         if (savedMode === 'on') {
-            setTimeout(() => {
-                const button = document.getElementById('vaporwave-toggle-btn');
-                if (button) button.click();
-            }, 500);
+            document.body.classList.add('vaporwave-active');
+            button.textContent = '🌴 VAPORWAVE: ВКЛ';
+            button.style.background = 'linear-gradient(90deg, #ff6ec7, #7873f5)';
+        } else {
+            document.body.classList.remove('vaporwave-active');
+            button.textContent = '🌴 VAPORWAVE: ВЫКЛ';
+            button.style.background = '#4285f4';
         }
     }
 

@@ -1,4 +1,6 @@
-html, body {
+/* ограничиваем сброс отступов только включенным режимом */
+html.vaporwave-active,
+body.vaporwave-active {
     min-height: 100vh !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -13,7 +15,6 @@ body.vaporwave-active {
     font-size: 16px !important;
     font-weight: 500 !important;
     line-height: 1.6 !important;
-    min-height: 100vh !important;
 }
 
 /* делаем главный контейнер прозрачным чтобы был виден фон body */
