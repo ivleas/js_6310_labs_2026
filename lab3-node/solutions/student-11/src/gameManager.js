@@ -54,7 +54,7 @@ export class GameManager {
     const result = player.game.move(direction);
 
     // если ход не удался (неверное направление или плитки не двигаются)
-    if (result.includes('❌') || result.includes('⚠️')) {
+    if (result.includes('❌') || result.includes('Так ходить нельзя')) {
       return { success: false, message: result, state: player.state };
     }
 

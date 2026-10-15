@@ -28,7 +28,7 @@ function createGameKeyboard() {
           color: 'secondary'
         },
         {
-          action: { type: 'text', label: '⬇️ Вниз', payload: JSON.stringify({ command: 'down' }) },
+          action: { type: 'text', label: '️ Вниз', payload: JSON.stringify({ command: 'down' }) },
           color: 'secondary'
         },
         {
@@ -65,10 +65,9 @@ function createGameOverKeyboard() {
   });
 }
 
-
 function createWelcomeKeyboard() {
   return JSON.stringify({
-    one_time: true, // исчезнет после нажатия
+    one_time: true,
     inline: false,
     buttons: [
       [
@@ -91,7 +90,6 @@ async function sendMessageWithKeyboard(context, message, keyboardJson) {
 vk.updates.on('message_new', async (context) => {
   const userId = context.senderId;
 
-  // распознаём команду из кнопок
   let command = null;
 
   if (context.messagePayload) {
@@ -107,11 +105,10 @@ vk.updates.on('message_new', async (context) => {
     }
   }
 
-  // обработка команд от кнопок
   if (command) {
     if (command === 'new_game') {
       const result = gameManager.startNewGame(userId);
-      await sendMessageWithKeyboard(context, ` Новая игра началась!\n\n${result.message}`, createGameKeyboard());
+      await sendMessageWithKeyboard(context, `🎮 Новая игра началась!\n\n${result.message}`, createGameKeyboard());
       return;
     }
 
@@ -137,22 +134,21 @@ vk.updates.on('message_new', async (context) => {
     }
   }
 
-  // обработка текстовых команд
   if (context.text) {
     const text = context.text.trim().toLowerCase();
     const parts = text.split(' ');
     const cmd = parts[0];
     const direction = parts[1];
 
-    // обработка кнопки "Начать" от вк
     if (text === 'начать' || text === 'start') {
-      const welcomeMessage = 
-                '👋 Привет! Я бот для игры в 2048.\n\n' +
-                'Правила просты:\n' +
-                '• Двигай плитки в одном направлении\n' +
-                '• Одинаковые числа сливаются и удваиваются\n' +
-                '• Цель — собрать плитку 2048!\n\n' +
-                'Нажми кнопку ниже, чтобы начать игру:';
+      const welcomeMessage = `👋 Привет! Я бот для игры в 2048.
+
+Правила просты:
+• Двигай плитки в одном направлении
+• Одинаковые числа сливаются и удваиваются
+• Цель — собрать плитку 2048!
+
+Нажми кнопку ниже, чтобы начать игру:`;
       await sendMessageWithKeyboard(context, welcomeMessage, createWelcomeKeyboard());
       return;
     }
@@ -188,23 +184,23 @@ vk.updates.on('message_new', async (context) => {
       return;
     }
 
-    // обработка команды "помощь"
     if (cmd === '/help' || text === 'помощь') {
-      const helpMessage = 
-                '📖 Доступные команды:\n\n' +
-                '/new_game — начать новую игру\n' +
-                '/move <вверх|вниз|влево|вправо> — сделать ход\n' +
-                '/undo — отменить последний ход\n' +
-                '/help — показать эту справку\n\n' +
-                'Или просто используй кнопки под сообщением!';
+      const helpMessage = `📖 Доступные команды:
+
+/new_game — начать новую игру
+/move <вверх|вниз|влево|вправо> — сделать ход
+/undo — отменить последний ход
+/help — показать эту справку
+
+Или просто используй кнопки под сообщением!`;
       await context.send(helpMessage);
       return;
     }
 
-    await context.send('🤔 Не понимаю. Используй кнопки или команды:\n/new_game - начать игру\n/move <вверх|вниз|влево|вправо> - сделать ход\n/undo - отменить ход\n/help - справка');
+    await context.send(' Не понимаю. Используй кнопки или команды:\n/new_game - начать игру\n/move <вверх|вниз|влево|вправо> - сделать ход\n/undo - отменить ход\n/help - справка');
   }
 });
 
-console.log('токен загружен успешно!');
-console.log('запускаем бота');
+console.log('✅ Токен загружен успешно!');
+console.log('🚀 Запускаем бота...');
 vk.updates.start().catch(console.error);
