@@ -21,7 +21,7 @@ export default [
             "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
             "semi": ["error", "always"], // Требовать точку с запятой
             "quotes": ["error", "single"], // Требовать одинарные кавычки
-            "indent": ["error", 4], // Отступ 4 пробела
+            "indent": ["error", 2], // Отступ 2 пробела
             "eqeqeq": ["error", "always"], // Требовать строгое равенство ===
             "no-var": "error", // Запретить var, использовать let/const
             "prefer-const": "error" // Требовать const, если переменная не меняется
